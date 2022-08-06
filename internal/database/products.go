@@ -14,23 +14,23 @@ type Products struct {
 	InventoryCount int
 }
 
-func InsertProducts(cod int, name string, brand string, desc string, price float32, count int) {
+func InsertProducts(cod int, name string, brand string, desc string, price float32, count int) error {
 	db, err := makeCN()
 
 	query := "INSERT INTO products (cod,name,brand,description,price,inventory_count) VALUES ($1,$2,$3,$4,$5,$6)"
 	result, err := db.Exec(query, cod, name, brand, desc, price, count)
 	if err != nil {
-		log.Fatalln(err)
-		return
+
+		return err
 	}
 
-	rowsAffected, err := result.RowsAffected()
+	_, err = result.RowsAffected()
 	if err != nil {
-		log.Fatalln(err)
-		return
+
+		return err
 	}
 
-	fmt.Printf("Added Product, %d rows affected", rowsAffected)
+	return nil
 }
 
 func GetProductsByID(id int) error {
@@ -96,9 +96,21 @@ func UpdateProducts(columnEdit string, newValue any, cod int) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
-func DeleteProducts() {
-	return
+func DeleteProducts(cod int) error {
+	db, err := makeCN()
+	if err != nil {
+		return err
+	}
+
+	query := "DELETE FROM products WHERE cod = $1"
+	_, err = db.Exec(query, cod)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
