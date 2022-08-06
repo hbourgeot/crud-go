@@ -1,15 +1,9 @@
 package main
 
-import "fmt"
+import "github.com/hbourgeot/crud-go/internal/utilities"
 
-func a() {
-	fmt.Println("Coming soon...")
-}
-
-func b() {
-	fmt.Println("working on this project")
-}
-
-func c() {
-	fmt.Println("Go Crud... but, for what?")
+func home() {
+	utilities.PrintTitle("Welcome to TodoTech Crud Program")
+	utilities.PrintSubtitle("Main menu")
+	utilities.PrintMenus("Clients", "Products", "Orders")
 }
