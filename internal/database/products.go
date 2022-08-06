@@ -85,8 +85,18 @@ func GetAllProducts() ([]*Products, error) {
 	return products, nil
 }
 
-func UpdateProducts() {
-	return
+func UpdateProducts(columnEdit string, newValue any, cod int) error {
+	db, err := makeCN()
+	if err != nil {
+		return err
+	}
+
+	query := "UPDATE products SET $1 = $2 WHERE cod = $3"
+	_, err = db.Exec(query, columnEdit, newValue, cod)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func DeleteProducts() {
