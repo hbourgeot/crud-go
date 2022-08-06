@@ -4,12 +4,6 @@ import (
 	"fmt"
 )
 
-type Clients struct {
-	Name  string
-	Phone string
-	DNI   int
-}
-
 func CreateClients(dni int, name string, phone string, ) error {
 	db, err := makeCN()
 

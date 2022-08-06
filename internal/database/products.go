@@ -4,15 +4,6 @@ import (
 	"fmt"
 )
 
-type Products struct {
-	Cod            int
-	Name           string
-	Brand          string
-	Description    string
-	Price          float32
-	InventoryCount int
-}
-
 func InsertProducts(cod int, name string, brand string, desc string, price float32, count int) error {
 	db, err := makeCN()
 
