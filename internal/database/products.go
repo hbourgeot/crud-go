@@ -53,8 +53,36 @@ func GetProductsByID(id int) error {
 	return nil
 }
 
-func GetAllProducts() {
-	return
+func GetAllProducts() ([]*Products, error) {
+	db, err := makeCN()
+	if err != nil {
+		return nil, err
+	}
+
+	products := []*Products{}
+
+	query := "SELECT * FROM products"
+	rows, err := db.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		p := &Products{}
+		err := rows.Scan(&p.Cod, &p.Name, &p.Brand, &p.Description, &p.Price, &p.InventoryCount)
+		if err != nil {
+			return nil, err
+		}
+
+		products = append(products, p)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return products, nil
 }
 
 func UpdateProducts() {
