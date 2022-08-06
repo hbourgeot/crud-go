@@ -6,6 +6,7 @@ import (
 )
 
 type Products struct {
+	Cod            int
 	Name           string
 	Brand          string
 	Description    string
@@ -32,8 +33,24 @@ func InsertProducts(cod int, name string, brand string, desc string, price float
 	fmt.Printf("Added Product, %d rows affected", rowsAffected)
 }
 
-func GetProductsByID(id int) {
-	return
+func GetProductsByID(id int) error {
+	db, err := makeCN()
+	if err != nil {
+		return err
+	}
+
+	var product Products
+
+	query := "SELECT * FROM products WHERE id = $1"
+	row := db.QueryRow(query, id).Scan(&product.Cod)
+	if row.Error() != "" {
+		log.Fatalln(row.Error())
+		return err
+	}
+
+	fmt.Printf("Product: %s\nCod: %d\nBrand: %s\nDescription: %s\nPrice: %.2f\nInventory count: %d\n", product.Name, product.Cod, product.Brand, product.Description, product.Price, product.InventoryCount)
+
+	return nil
 }
 
 func GetAllProducts() {
