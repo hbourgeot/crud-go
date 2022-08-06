@@ -2,7 +2,6 @@ package database
 
 import (
 	"fmt"
-	"log"
 )
 
 type Products struct {
@@ -44,7 +43,6 @@ func GetProductsByID(id int) error {
 	query := "SELECT * FROM products WHERE id = $1"
 	row := db.QueryRow(query, id).Scan(&product.Cod)
 	if row.Error() != "" {
-		log.Fatalln(row.Error())
 		return err
 	}
 
