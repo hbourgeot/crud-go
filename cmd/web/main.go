@@ -14,7 +14,7 @@ func main() {
 
 		utilities.PrintTitle("Welcome to TodoTech Crud Program")
 		utilities.PrintSubtitle("Main menu")
-		utilities.PrintMenus("Clients", "Products", "Orders", "Exit")
+		utilities.PrintMenus("Clients...", "Products...", "Orders...", "Exit")
 		reader := utilities.NewReader()
 
 		num, err := reader.ReadString('\n')

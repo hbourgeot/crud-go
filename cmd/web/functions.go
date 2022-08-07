@@ -1,15 +1,23 @@
 package main
 
-import "fmt"
+import (
+	"github.com/hbourgeot/crud-go/internal/utilities"
+)
 
 func clientsMenu() {
-	fmt.Println("Hello from clientsMenu")
+	utilities.PrintTitle("TodoTech Crud Program")
+	utilities.PrintSubtitle("Clients menu")
+	utilities.PrintMenus("Add client", "Show clients...", "Update Client", "Delete client")
 }
 
 func productsMenu() {
-	fmt.Println("Hello from productsMenu")
+	utilities.PrintTitle("TodoTech Crud Program")
+	utilities.PrintSubtitle("Products menu")
+	utilities.PrintMenus("Add Product", "Show products...", "Update Product", "Delete product")
 }
 
 func ordersMenu() {
-	fmt.Println("Hello from ordersMenu")
+	utilities.PrintTitle("TodoTech Crud Program")
+	utilities.PrintSubtitle("Orders menu")
+	utilities.PrintMenus("Add Order", "Show products...", "Update Product", "Delete product")
 }
