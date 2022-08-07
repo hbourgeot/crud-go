@@ -126,7 +126,7 @@ func showClients() {
 		break
 	default:
 		fmt.Println("Invalid option")
-
+		break
 	}
 }
 
@@ -276,7 +276,63 @@ func addProduct() {
 }
 
 func showProducts() {
+	utilities.PrintTitle("TodoTech CRUD Program")
+	utilities.PrintSubtitle("Show Products menu")
+	utilities.PrintMenus("Show Product by Code", "Show All Products", "Go to Products menu", "Go to Main Menu", "Exit")
+	reader := utilities.NewReader()
+	option, err := utilities.ReadNumber(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
 
+	switch option {
+	case 1:
+		fmt.Print("Enter Product Code: ")
+		productCode, err := utilities.ReadNumber(reader)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		err = database.GetProductsByCode(productCode)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		fmt.Println("\n\n\n")
+		break
+	case 2:
+		var count int
+		products, err := database.GetAllProducts()
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		for _, p := range products {
+			fmt.Printf("Product: %s\nCod: %d\nBrand: %s\nDescription: %s\nPrice: %.2f\nInventory count: %d\n", p.Name, p.Cod, p.Brand, p.Description, p.Price, p.InventoryCount)
+			if count < 15 {
+				count = 15
+			}
+			if count < len(p.Description) {
+				count = len(p.Description)
+			}
+
+			utilities.PrintSeparator(count + 14)
+		}
+		fmt.Print("\n\n")
+		break
+	case 3:
+		clientsMenu()
+		break
+	case 4:
+		break
+	default:
+		fmt.Println("Invalid option")
+
+	}
 }
 
 func updateProduct() {
