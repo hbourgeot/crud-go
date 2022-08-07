@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func InsertProducts(cod int, name string, brand string, desc string, price float32, count int) error {
+func InsertProducts(cod int, name string, brand string, desc string, price float64, count int) error {
 	db, err := makeCN()
 
 	query := "INSERT INTO products (cod,name,brand,description,price,inventory_count) VALUES ($1,$2,$3,$4,$5,$6)"

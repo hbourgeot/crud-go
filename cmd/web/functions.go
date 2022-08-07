@@ -166,10 +166,113 @@ func updateClient() {
 }
 
 func deleteClient() {
+	reader := utilities.NewReader()
+	fmt.Print("Enter the Client DNI: ")
+	dni, err := utilities.ReadNumber(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
 
+	err = database.GetClientByDNI(dni)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	fmt.Print("Are you sure you want to eliminate the customer? y/n")
+	line, err := utilities.ReadLine(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	if line == "y" {
+		err = database.DeleteClients(dni)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		fmt.Println("Client deleted.")
+	}
 }
 func addProduct() {
+	reader := utilities.NewReader()
+	fmt.Print("Enter Product code: ")
+	productCod, err := utilities.ReadNumber(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
 
+	fmt.Print("Enter Product Name: ")
+	line, err := utilities.ReadLine(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	productName := line
+
+	fmt.Print("Enter Product Brand: ")
+	line, err = utilities.ReadLine(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	productBrand := line
+
+	fmt.Print("Enter Product Description: ")
+	line, err = utilities.ReadLine(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	productDesc := line
+
+	fmt.Print("Enter Product Price: ")
+	productPrice, err := utilities.ReadPrice(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	fmt.Print("Enter Inventory Count: ")
+	productCount, err := utilities.ReadNumber(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	err = database.InsertProducts(productCod, productName, productBrand, productDesc, productPrice, productCount)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	utilities.PrintTitle("Product registered successfully")
+	utilities.PrintSubtitle("Options menu")
+	utilities.PrintMenus("Generate Order", "Go to Products menu", "Go to Main menu", "Exit")
+
+	option, err := utilities.ReadNumber(reader)
+
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	switch option {
+	case 1:
+		createOrder()
+		break
+	case 2:
+		productsMenu()
+		break
+	case 3:
+		fmt.Println("Changing to main menu...")
+		break
+	case 4:
+		os.Exit(0)
+		break
+	default:
+		fmt.Println("Invalid option")
+	}
 }
 
 func showProducts() {

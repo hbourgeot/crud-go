@@ -20,11 +20,26 @@ func ReadNumber(reader *bufio.Reader) (int, error) {
 
 	num = strings.TrimSuffix(num, "\r\n")
 
-	option, err := strconv.Atoi(num)
+	numbers, err := strconv.Atoi(num)
 	if err != nil {
 		return 0, err
 	}
-	return option, nil
+	return numbers, nil
+}
+
+func ReadPrice(reader *bufio.Reader) (float64, error) {
+	num, err := reader.ReadString('\n')
+	if err != nil {
+		return 0, err
+	}
+
+	num = strings.TrimSuffix(num, "\r\n")
+
+	price, err := strconv.ParseFloat(num, 64)
+	if err != nil {
+		return 0, err
+	}
+	return price, nil
 }
 
 func ReadLine(reader *bufio.Reader) (string, error) {
