@@ -27,7 +27,7 @@ func CreateClients(dni int, name string, phone string) error {
 	return nil
 }
 
-func GetClientByDNI(id int) error {
+func GetClientByDNI(dni int) error {
 	db, err := makeCN()
 	if err != nil {
 		return err
@@ -36,8 +36,9 @@ func GetClientByDNI(id int) error {
 	var client Clients
 
 	query := "SELECT * FROM clients WHERE dni = $1"
-	row := db.QueryRow(query, id).Scan(&client.DNI)
-	if row.Error() != "" {
+	row := db.QueryRow(query, dni)
+	err = row.Scan(&client.DNI, &client.Name, &client.Phone)
+	if err != nil {
 		return err
 	}
 

@@ -41,3 +41,9 @@ func PrintMenus(options ...string) {
 	}
 	fmt.Print("\nEnter your option: ")
 }
+
+func PrintSeparator(count int) {
+	for i := 0; i < count; i++ {
+		fmt.Print("*")
+	}
+}
