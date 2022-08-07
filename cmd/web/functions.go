@@ -8,6 +8,7 @@ func clientsMenu() {
 	utilities.PrintTitle("TodoTech Crud Program")
 	utilities.PrintSubtitle("Clients menu")
 	utilities.PrintMenus("Add client", "Show clients...", "Update Client", "Delete client")
+
 }
 
 func productsMenu() {

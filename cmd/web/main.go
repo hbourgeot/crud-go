@@ -4,8 +4,6 @@ import (
 	"github.com/hbourgeot/crud-go/internal/utilities"
 	"log"
 	"os"
-	"strconv"
-	"strings"
 )
 
 func main() {
@@ -17,17 +15,10 @@ func main() {
 		utilities.PrintMenus("Clients...", "Products...", "Orders...", "Exit")
 		reader := utilities.NewReader()
 
-		num, err := reader.ReadString('\n')
+		option, err := utilities.ReadOption(reader)
 		if err != nil {
 			log.Fatalln(err)
 			return
-		}
-
-		num = strings.TrimSuffix(num, "\r\n")
-
-		option, err = strconv.Atoi(num)
-		if err != nil {
-			log.Fatalln(err)
 		}
 
 		switch option {
