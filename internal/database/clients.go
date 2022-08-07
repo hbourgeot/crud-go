@@ -2,10 +2,14 @@ package database
 
 import (
 	"fmt"
+	_ "github.com/lib/pq"
 )
 
-func CreateClients(dni int, name string, phone string, ) error {
+func CreateClients(dni int, name string, phone string) error {
 	db, err := makeCN()
+	if err != nil {
+		return err
+	}
 
 	query := "INSERT INTO clients (dni,name,phone) VALUES ($1,$2,$3)"
 	result, err := db.Exec(query, dni, name, phone)

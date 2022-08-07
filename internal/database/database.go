@@ -2,7 +2,7 @@ package database
 
 import (
 	"database/sql"
-	"log"
+	_ "github.com/lib/pq"
 )
 
 func makeCN() (*sql.DB, error) {
@@ -11,6 +11,5 @@ func makeCN() (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	log.Println("Connected to the DB")
 	return db, nil
 }

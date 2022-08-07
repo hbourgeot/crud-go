@@ -12,7 +12,7 @@ func NewReader() *bufio.Reader {
 	return reader
 }
 
-func ReadOption(reader *bufio.Reader) (int, error) {
+func ReadNumber(reader *bufio.Reader) (int, error) {
 	num, err := reader.ReadString('\n')
 	if err != nil {
 		return 0, err
@@ -25,4 +25,15 @@ func ReadOption(reader *bufio.Reader) (int, error) {
 		return 0, err
 	}
 	return option, nil
+}
+
+func ReadLine(reader *bufio.Reader) (string, error) {
+	line, err := reader.ReadString('\n')
+	if err != nil {
+		return "", err
+	}
+
+	line = strings.TrimSuffix(line, "\r\n")
+
+	return line, nil
 }

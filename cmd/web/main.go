@@ -16,7 +16,7 @@ func main() {
 		utilities.PrintMenus("Clients...", "Products...", "Orders...", "Exit")
 		reader := utilities.NewReader()
 
-		option, err := utilities.ReadOption(reader)
+		option, err := utilities.ReadNumber(reader)
 		if err != nil {
 			log.Fatalln(err)
 			return
@@ -46,7 +46,7 @@ func clientsMenu() {
 	utilities.PrintSubtitle("Clients menu")
 	utilities.PrintMenus("Add client", "Show clients...", "Update Client", "Delete client", "Go to main menu")
 	reader := utilities.NewReader()
-	option, err := utilities.ReadOption(reader)
+	option, err := utilities.ReadNumber(reader)
 
 	if err != nil {
 		log.Fatalln(err)
@@ -79,7 +79,7 @@ func productsMenu() {
 	utilities.PrintSubtitle("Products menu")
 	utilities.PrintMenus("Add Product", "Show products...", "Update Product", "Delete product", "Go to main menu")
 	reader := utilities.NewReader()
-	option, err := utilities.ReadOption(reader)
+	option, err := utilities.ReadNumber(reader)
 
 	if err != nil {
 		log.Fatalln(err)
@@ -112,7 +112,7 @@ func ordersMenu() {
 	utilities.PrintSubtitle("Orders menu")
 	utilities.PrintMenus("Add Order", "Show orders...", "Go to Main menu")
 	reader := utilities.NewReader()
-	option, err := utilities.ReadOption(reader)
+	option, err := utilities.ReadNumber(reader)
 
 	if err != nil {
 		log.Fatalln(err)
