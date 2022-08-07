@@ -135,7 +135,7 @@ func updateClient() {
 	reader := utilities.NewReader()
 
 	fmt.Print("Enter DNI of the client to update: ")
-	numbers, err := utilities.ReadNumber(reader)
+	dni, err := utilities.ReadNumber(reader)
 	if err != nil {
 		log.Fatalln(err)
 		return
@@ -155,19 +155,14 @@ func updateClient() {
 	}
 
 	colToUpdate := strings.ToLower(line)
-	var newVal string
 
 	fmt.Print("\nEnter the value: ")
-	if colToUpdate == "name" {
-		line, err = utilities.ReadLine(reader)
-		newVal = line
-	} else if colToUpdate == "dni" || colToUpdate == "phone" {
-		numbers, err = utilities.ReadNumber(reader)
-		newVal = numbers
+	line, err = utilities.ReadLine(reader)
+	err = database.UpdateClient(colToUpdate, line, dni)
+	if err != nil {
+		log.Fatalln(err)
+		return
 	}
-
-	err = database.UpdateClient(colToUpdate, newVal, dni)
-
 }
 
 func deleteClient() {

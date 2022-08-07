@@ -42,7 +42,7 @@ func GetClientByDNI(dni int) error {
 		return err
 	}
 
-	fmt.Printf("Client: %s\nDNI: %d\nPhone: %s\n", client.Name, client.DNI, client.Phone)
+	fmt.Printf("Name: %s\nDNI: %d\nPhone: %s\n", client.Name, client.DNI, client.Phone)
 
 	return nil
 }
@@ -84,9 +84,15 @@ func UpdateClient(columnEdit string, newValue string, dni int) error {
 	if err != nil {
 		return err
 	}
-
-	query := "UPDATE clients SET $1 = $2 WHERE dni = $3"
-	_, err = db.Exec(query, columnEdit, newValue, dni)
+	query := ""
+	if columnEdit == "name" {
+		query = "UPDATE clients SET name = $1 WHERE dni = $2"
+	} else if columnEdit == "phone" {
+		query = "UPDATE clients SET phone = $1 WHERE dni = $2"
+	} else {
+		query = "UPDATE clients SET dni = $1 WHERE dni = $2"
+	}
+	_, err = db.Exec(query, newValue, dni)
 	if err != nil {
 		return err
 	}
