@@ -26,7 +26,7 @@ func PrintSubtitle(subtitle string) {
 func PrintMenus(options ...string) {
 	var count int
 	for i := 0; i < len(options); i++ {
-		fmt.Printf("%d. %s\n", i, options[i])
+		fmt.Printf("%d. %s\n", i+1, options[i])
 		if count < len(options[i]) {
 			count = len(options[i])
 		}
@@ -39,5 +39,5 @@ func PrintMenus(options ...string) {
 	for i := 0; i < count+2; i++ {
 		fmt.Print("*")
 	}
-	fmt.Print("\nEnter your option:")
+	fmt.Print("\nEnter your option: ")
 }
