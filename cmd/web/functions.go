@@ -6,6 +6,7 @@ import (
 	"github.com/hbourgeot/crud-go/internal/utilities"
 	"log"
 	"os"
+	"strings"
 )
 
 func addClient() {
@@ -130,6 +131,42 @@ func showClients() {
 }
 
 func updateClient() {
+
+	reader := utilities.NewReader()
+
+	fmt.Print("Enter DNI of the client to update: ")
+	numbers, err := utilities.ReadNumber(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	err = database.GetClientByDNI(dni)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	fmt.Print("\nEnter the name of the data to modify: ")
+	line, err := utilities.ReadLine(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	colToUpdate := strings.ToLower(line)
+	var newVal string
+
+	fmt.Print("\nEnter the value: ")
+	if colToUpdate == "name" {
+		line, err = utilities.ReadLine(reader)
+		newVal = line
+	} else if colToUpdate == "dni" || colToUpdate == "phone" {
+		numbers, err = utilities.ReadNumber(reader)
+		newVal = numbers
+	}
+
+	err = database.UpdateClient(colToUpdate, newVal, dni)
 
 }
 
