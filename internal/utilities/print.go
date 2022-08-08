@@ -46,4 +46,5 @@ func PrintSeparator(count int) {
 	for i := 0; i < count; i++ {
 		fmt.Print("*")
 	}
+	fmt.Print("\n")
 }

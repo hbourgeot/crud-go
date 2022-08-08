@@ -181,7 +181,7 @@ func deleteClient() {
 		return
 	}
 
-	fmt.Print("Are you sure you want to eliminate the customer? y/n")
+	fmt.Print("Are you sure you want to delete the client? y/n: ")
 	line, err := utilities.ReadLine(reader)
 	if err != nil {
 		log.Fatalln(err)
@@ -417,7 +417,7 @@ func deleteProduct() {
 		return
 	}
 
-	fmt.Print("Are you sure you want to eliminate the customer? y/n")
+	fmt.Print("Are you sure you want to delete the product? y/n: ")
 	line, err := utilities.ReadLine(reader)
 	if err != nil {
 		log.Fatalln(err)
@@ -433,9 +433,125 @@ func deleteProduct() {
 }
 
 func createOrder() {
+	reader := utilities.NewReader()
 
+	fmt.Print("Enter Client DNI: ")
+	dni, err := utilities.ReadNumber(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	fmt.Print("Enter Product code: ")
+	code, err := utilities.ReadNumber(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	utilities.PrintTitle(" Order Resume ")
+	err = database.GetClientByDNI(dni)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	err = database.GetProductsByCode(code)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	fmt.Print("\n\nGenerate order? y/n:")
+	line, err := utilities.ReadLine(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	if line == "y" {
+		err = database.GenerateOrder(code, dni)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+	}
 }
 
 func readOrders() {
+	utilities.PrintTitle("TodoTech CRUD Program")
+	utilities.PrintSubtitle("Show Clients menu")
+	utilities.PrintMenus("Show Orders by DNI", "Show Orders By Product Code", "Show All Orders", "Go to Orders menu", "Go to Main Menu")
+	reader := utilities.NewReader()
+	option, err := utilities.ReadNumber(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
 
+	switch option {
+	case 1:
+		fmt.Print("Enter Client DNI: ")
+		dni, err := utilities.ReadNumber(reader)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		var count = 20
+		orders, err := database.GetOrderByDNI(dni)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		for _, o := range orders {
+			fmt.Printf("ID: %d\nClient DNI: %d\nProduct Code: %d\n", o.ID, o.ClientDNI, o.ProductCod)
+			utilities.PrintSeparator(count)
+		}
+		fmt.Print("\n\n")
+		break
+	case 2:
+		fmt.Print("Enter Client DNI: ")
+		code, err := utilities.ReadNumber(reader)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		var count = 20
+		orders, err := database.GetOrderByCode(code)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		for _, o := range orders {
+			fmt.Printf("ID: %d\nClient DNI: %d\nProduct Code: %d\n", o.ID, o.ClientDNI, o.ProductCod)
+			utilities.PrintSeparator(count)
+		}
+		fmt.Print("\n\n")
+		break
+	case 3:
+		var count = 20
+		orders, err := database.GetAllOrders()
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		for _, o := range orders {
+			fmt.Printf("ID: %d\nClient DNI: %d\nProduct Code: %d\n", o.ID, o.ClientDNI, o.ProductCod)
+			utilities.PrintSeparator(count)
+		}
+		fmt.Print("\n\n")
+		break
+	case 4:
+		ordersMenu()
+		break
+	case 5:
+		break
+	default:
+		fmt.Println("Invalid option")
+
+	}
 }
