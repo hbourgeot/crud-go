@@ -195,6 +195,7 @@ func deleteClient() {
 		fmt.Println("Client deleted.")
 	}
 }
+
 func addProduct() {
 	reader := utilities.NewReader()
 	fmt.Print("Enter Product code: ")
@@ -402,7 +403,33 @@ func updateProduct() {
 }
 
 func deleteProduct() {
+	reader := utilities.NewReader()
+	fmt.Print("Enter the Product Code: ")
+	code, err := utilities.ReadNumber(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
 
+	err = database.GetProductsByCode(code)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	fmt.Print("Are you sure you want to eliminate the customer? y/n")
+	line, err := utilities.ReadLine(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	if line == "y" {
+		err = database.DeleteProducts(code)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		fmt.Println("Client deleted.")
+	}
 }
 
 func createOrder() {

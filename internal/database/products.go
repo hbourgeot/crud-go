@@ -23,7 +23,7 @@ func InsertProducts(cod int, name string, brand string, desc string, price float
 	return nil
 }
 
-func GetProductsByCode(id int) error {
+func GetProductsByCode(cod int) error {
 	db, err := makeCN()
 	if err != nil {
 		return err
@@ -32,7 +32,7 @@ func GetProductsByCode(id int) error {
 	var product Products
 
 	query := "SELECT * FROM products WHERE cod = $1"
-	row := db.QueryRow(query, id)
+	row := db.QueryRow(query, cod)
 	err = row.Scan(&product.Cod, &product.Name, &product.Brand, &product.Description, &product.Price, &product.InventoryCount)
 	if err != nil {
 		return err
