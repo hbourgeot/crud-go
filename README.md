@@ -1,12 +1,8 @@
 # Golang CRUD
 
-***
-
 Crud maked from scratch, using **PostgreSQL** as Data Base, without libraries.
 
 ## Table of Content
-
-***
 
 1. [Data Base Content](#data-base-content).
 
@@ -31,8 +27,6 @@ Crud maked from scratch, using **PostgreSQL** as Data Base, without libraries.
     3. Options menu.
 
 ## Data Base Content
-
-***
 
 ### Table Clients
 
