@@ -17,7 +17,7 @@ func GenerateOrder(productCod, clientDNI int) error {
 	return nil
 }
 
-func GetOrderByDNI(dni int) ([]*Orders, error) {
+func GetOrdersByDNI(dni int) ([]*Orders, error) {
 	db, err := makeCN()
 	if err != nil {
 		return nil, err
@@ -49,7 +49,7 @@ func GetOrderByDNI(dni int) ([]*Orders, error) {
 	return orders, nil
 }
 
-func GetOrderByCode(code int) ([]*Orders, error) {
+func GetOrdersByCode(code int) ([]*Orders, error) {
 	db, err := makeCN()
 	if err != nil {
 		return nil, err

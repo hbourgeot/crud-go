@@ -35,7 +35,7 @@ func addClient() {
 	}
 	clientPhone := line
 
-	err = database.CreateClients(clientDNI, clientName, clientPhone)
+	err = database.CreateClient(clientDNI, clientName, clientPhone)
 	if err != nil {
 		log.Fatalln(err)
 		return
@@ -188,7 +188,7 @@ func deleteClient() {
 		return
 	}
 	if line == "y" {
-		err = database.DeleteClients(dni)
+		err = database.DeleteClient(dni)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -498,7 +498,7 @@ func readOrders() {
 		}
 
 		var count = 20
-		orders, err := database.GetOrderByDNI(dni)
+		orders, err := database.GetOrdersByDNI(dni)
 		if err != nil {
 			log.Fatalln(err)
 			return
@@ -519,7 +519,7 @@ func readOrders() {
 		}
 
 		var count = 20
-		orders, err := database.GetOrderByCode(code)
+		orders, err := database.GetOrdersByCode(code)
 		if err != nil {
 			log.Fatalln(err)
 			return

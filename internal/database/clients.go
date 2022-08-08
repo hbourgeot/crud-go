@@ -5,7 +5,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func CreateClients(dni int, name string, phone string) error {
+func CreateClient(dni int, name string, phone string) error {
 	db, err := makeCN()
 	if err != nil {
 		return err
@@ -100,7 +100,7 @@ func UpdateClient(columnEdit string, newValue string, dni int) error {
 	return nil
 }
 
-func DeleteClients(dni int) error {
+func DeleteClient(dni int) error {
 	db, err := makeCN()
 	if err != nil {
 		return err
