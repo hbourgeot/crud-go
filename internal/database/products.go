@@ -52,6 +52,7 @@ func GetAllProducts() ([]*Products, error) {
 	products := []*Products{}
 
 	query := "SELECT * FROM products"
+
 	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
@@ -81,8 +82,27 @@ func UpdateProducts(columnEdit string, newValue any, cod int) error {
 		return err
 	}
 
-	query := "UPDATE products SET $1 = $2 WHERE cod = $3"
-	_, err = db.Exec(query, columnEdit, newValue, cod)
+	var query string
+	switch columnEdit {
+	case "code":
+		query = "UPDATE products SET cod = $1 WHERE cod = $2"
+	case "name":
+		query = "UPDATE products SET name = $1 WHERE cod = $2"
+		break
+	case "brand":
+		query = "UPDATE products SET brand = $1 WHERE cod = $2"
+		break
+	case "description":
+		query = "UPDATE products SET description = $1 WHERE cod = $2"
+		break
+	case "price":
+		query = "UPDATE products SET price = $1 WHERE cod = $2"
+		break
+	case "inventory count":
+		query = "UPDATE products SET inventory_count = $1 WHERE cod = $2"
+		break
+	}
+	_, err = db.Exec(query, newValue, cod)
 	if err != nil {
 		return err
 	}

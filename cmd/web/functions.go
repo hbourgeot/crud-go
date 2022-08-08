@@ -6,6 +6,7 @@ import (
 	"github.com/hbourgeot/crud-go/internal/utilities"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -336,7 +337,68 @@ func showProducts() {
 }
 
 func updateProduct() {
+	reader := utilities.NewReader()
 
+	fmt.Print("Enter Code of the product to update: ")
+	code, err := utilities.ReadNumber(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	err = database.GetProductsByCode(code)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	fmt.Print("\nEnter the name of the data to modify: ")
+	line, err := utilities.ReadLine(reader)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	colToUpdate := strings.ToLower(line)
+
+	fmt.Print("\nEnter the value: ")
+	line, err = utilities.ReadLine(reader)
+
+	switch colToUpdate {
+	case "code", "inventory count":
+		newVal, err := strconv.Atoi(line)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		err = database.UpdateProducts(colToUpdate, newVal, code)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+		break
+	case "name", "brand", "description":
+		err = database.UpdateProducts(colToUpdate, line, code)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+		break
+	case "price":
+		newVal, err := strconv.ParseFloat(line, 64)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		err = database.UpdateProducts(colToUpdate, newVal, code)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+		break
+	}
 }
 
 func deleteProduct() {
