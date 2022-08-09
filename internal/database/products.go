@@ -1,6 +1,8 @@
 package database
 
 import (
+	"database/sql"
+	"errors"
 	"fmt"
 )
 
@@ -35,7 +37,11 @@ func GetProductsByCode(cod int) error {
 	row := db.QueryRow(query, cod)
 	err = row.Scan(&product.Cod, &product.Name, &product.Brand, &product.Description, &product.Price, &product.InventoryCount)
 	if err != nil {
-		return err
+		if errors.Is(err, sql.ErrNoRows) {
+			return err
+		} else {
+			return err
+		}
 	}
 
 	fmt.Printf("Product: %s\nCod: %d\nBrand: %s\nDescription: %s\nPrice: %.2f\nInventory count: %d\n", product.Name, product.Cod, product.Brand, product.Description, product.Price, product.InventoryCount)
@@ -63,7 +69,11 @@ func GetAllProducts() ([]*Products, error) {
 		p := &Products{}
 		err := rows.Scan(&p.Cod, &p.Name, &p.Brand, &p.Description, &p.Price, &p.InventoryCount)
 		if err != nil {
-			return nil, err
+			if errors.Is(err, sql.ErrNoRows) {
+				return nil, err
+			} else {
+				return nil, err
+			}
 		}
 
 		products = append(products, p)

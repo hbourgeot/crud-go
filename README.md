@@ -6,24 +6,17 @@ Crud maked from scratch, using **PostgreSQL** as Data Base, without libraries.
 
 1. [Data Base Content](#data-base-content).
 
-   1. [Table Clients](#table-clients).
-   2. [Table Products](#table-products).
-   3. [Table Orders](#table-orders).
+    1. [Table Clients](#table-clients).
+    2. [Table Products](#table-products).
+    3. [Table Orders](#table-orders).
 2. [Database Package](#database-package).
 
-   1. [Structs to use](#structs-to-use).
-   2. [Connection to PostgreSQL](#connection-to-postgresql).
-   3. [Functions for querying the Clients and Products Table](#functions-for-querying-clients-and-products-tables).
-   4. [Functions for querying the Orders Table](#functions-for-querying-the-orders-table).
-3. Utilities Package.
-
-   1. Functions for Print Titles and Separators.
-   2. Reader and Read Entries.
-4. Main Package.
-
-   1. Principal menus.
-   2. Show menus.
-   3. Options menu.
+    1. [Structs to use](#structs-to-use).
+    2. [Connection to PostgreSQL](#connection-to-postgresql).
+    3. [Functions for querying the Clients and Products Table](#functions-for-querying-clients-and-products-tables).
+    4. [Functions for querying the Orders Table](#functions-for-querying-the-orders-table).
+3. [Utilities Package](#utilities-package).
+4. [Main Package](#main-package).
 
 ## Data Base Content
 
@@ -175,3 +168,16 @@ The functions used here are similar to the mentioned previously.
 
 In ```GetOrdersByDNI``` we print all the orders by this client, the case is similar for ```GetOrdersByCode```, only
 changes the client by the product. Finishing, in ```GetAllOrders``` we pass the data of this table.
+
+## Utilities Package
+
+This package is made for store the utilities functions separate from the main package functions. This package has *two*
+files, ```internal/utilities/print.go``` and  ```internal/utilities/reader.go```. In the first are located the functions
+for print the title, subtitle, menus, and separators. In the other, are the functions that help the program to makes
+readers, and read strings from the input, two of these, returns a int, and a float64 value, respectively.
+
+## Main Package
+
+In the main package I used two files, ```main.go``` and ```functions.go```, in the main file, are the functions for make
+the menus functionality, in the functions file are the functions for receive the data and pass it to the database
+package functions 

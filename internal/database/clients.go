@@ -1,6 +1,8 @@
 package database
 
 import (
+	"database/sql"
+	"errors"
 	"fmt"
 	_ "github.com/lib/pq"
 )
@@ -39,7 +41,11 @@ func GetClientByDNI(dni int) error {
 	row := db.QueryRow(query, dni)
 	err = row.Scan(&client.DNI, &client.Name, &client.Phone)
 	if err != nil {
-		return err
+		if errors.Is(err, sql.ErrNoRows) {
+			return err
+		} else {
+			return err
+		}
 	}
 
 	fmt.Printf("Name: %s\nDNI: %d\nPhone: %s\n", client.Name, client.DNI, client.Phone)
@@ -65,7 +71,11 @@ func GetAllClients() ([]*Clients, error) {
 		c := &Clients{}
 		err := rows.Scan(&c.DNI, &c.Name, &c.Phone)
 		if err != nil {
-			return nil, err
+			if errors.Is(err, sql.ErrNoRows) {
+				return nil, err
+			} else {
+				return nil, err
+			}
 		}
 
 		clients = append(clients, c)

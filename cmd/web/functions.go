@@ -63,7 +63,6 @@ func addClient() {
 		break
 	case 4:
 		os.Exit(0)
-		break
 	default:
 		fmt.Println("Invalid option")
 	}
@@ -91,11 +90,10 @@ func showClients() {
 
 		err = database.GetClientByDNI(clientDNI)
 		if err != nil {
-			log.Fatalln(err)
-			return
+			log.Println(err)
 		}
 
-		fmt.Println("\n\n\n")
+		fmt.Print("\n\n\n")
 		break
 	case 2:
 		var count int
@@ -129,6 +127,32 @@ func showClients() {
 		fmt.Println("Invalid option")
 		break
 	}
+
+	utilities.PrintSubtitle("Options menu")
+	utilities.PrintMenus("Generate Order", "Go to Clients menu", "Go to Main menu", "Exit")
+
+	option, err = utilities.ReadNumber(reader)
+
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	switch option {
+	case 1:
+		createOrder()
+		break
+	case 2:
+		clientsMenu()
+		break
+	case 3:
+		fmt.Println("Changing to main menu...")
+		break
+	case 4:
+		os.Exit(0)
+	default:
+		fmt.Println("Invalid option")
+	}
 }
 
 func updateClient() {
@@ -144,7 +168,7 @@ func updateClient() {
 
 	err = database.GetClientByDNI(dni)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 
@@ -161,8 +185,35 @@ func updateClient() {
 	line, err = utilities.ReadLine(reader)
 	err = database.UpdateClient(colToUpdate, line, dni)
 	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	utilities.PrintTitle("Client updated successfully")
+	utilities.PrintSubtitle("Options menu")
+	utilities.PrintMenus("Generate Order", "Go to Clients menu", "Go to Main menu", "Exit")
+
+	option, err := utilities.ReadNumber(reader)
+
+	if err != nil {
 		log.Fatalln(err)
 		return
+	}
+
+	switch option {
+	case 1:
+		createOrder()
+		break
+	case 2:
+		clientsMenu()
+		break
+	case 3:
+		fmt.Println("Changing to main menu...")
+		break
+	case 4:
+		os.Exit(0)
+	default:
+		fmt.Println("Invalid option")
 	}
 }
 
@@ -190,9 +241,35 @@ func deleteClient() {
 	if line == "y" {
 		err = database.DeleteClient(dni)
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
+			return
 		}
-		fmt.Println("Client deleted.")
+	}
+	utilities.PrintTitle("Client deleted successfully")
+	utilities.PrintSubtitle("Options menu")
+	utilities.PrintMenus("Generate Order", "Go to Clients menu", "Go to Main menu", "Exit")
+
+	option, err := utilities.ReadNumber(reader)
+
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	switch option {
+	case 1:
+		createOrder()
+		break
+	case 2:
+		clientsMenu()
+		break
+	case 3:
+		fmt.Println("Changing to main menu...")
+		break
+	case 4:
+		os.Exit(0)
+	default:
+		fmt.Println("Invalid option")
 	}
 }
 
@@ -271,7 +348,6 @@ func addProduct() {
 		break
 	case 4:
 		os.Exit(0)
-		break
 	default:
 		fmt.Println("Invalid option")
 	}
@@ -299,18 +375,16 @@ func showProducts() {
 
 		err = database.GetProductsByCode(productCode)
 		if err != nil {
-			log.Fatalln(err)
-			return
+			log.Println(err)
 		}
 
-		fmt.Println("\n\n\n")
+		fmt.Print("\n\n\n")
 		break
 	case 2:
 		var count int
 		products, err := database.GetAllProducts()
 		if err != nil {
-			log.Fatalln(err)
-			return
+			log.Println(err)
 		}
 
 		for _, p := range products {
@@ -334,6 +408,32 @@ func showProducts() {
 	default:
 		fmt.Println("Invalid option")
 
+	}
+
+	utilities.PrintSubtitle("Options menu")
+	utilities.PrintMenus("Generate Order", "Go to Products menu", "Go to Main menu", "Exit")
+
+	option, err = utilities.ReadNumber(reader)
+
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	switch option {
+	case 1:
+		createOrder()
+		break
+	case 2:
+		productsMenu()
+		break
+	case 3:
+		fmt.Println("Changing to main menu...")
+		break
+	case 4:
+		os.Exit(0)
+	default:
+		fmt.Println("Invalid option")
 	}
 }
 
@@ -395,10 +495,37 @@ func updateProduct() {
 
 		err = database.UpdateProducts(colToUpdate, newVal, code)
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
 			return
 		}
 		break
+	}
+
+	utilities.PrintTitle("Product updated successfully")
+	utilities.PrintSubtitle("Options menu")
+	utilities.PrintMenus("Generate Order", "Go to Products menu", "Go to Main menu", "Exit")
+
+	option, err := utilities.ReadNumber(reader)
+
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	switch option {
+	case 1:
+		createOrder()
+		break
+	case 2:
+		productsMenu()
+		break
+	case 3:
+		fmt.Println("Changing to main menu...")
+		break
+	case 4:
+		os.Exit(0)
+	default:
+		fmt.Println("Invalid option")
 	}
 }
 
@@ -426,9 +553,37 @@ func deleteProduct() {
 	if line == "y" {
 		err = database.DeleteProducts(code)
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
+			return
 		}
 		fmt.Println("Client deleted.")
+	}
+
+	utilities.PrintTitle("Product deleted successfully")
+	utilities.PrintSubtitle("Options menu")
+	utilities.PrintMenus("Generate Order", "Go to Products menu", "Go to Main menu", "Exit")
+
+	option, err := utilities.ReadNumber(reader)
+
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	switch option {
+	case 1:
+		createOrder()
+		break
+	case 2:
+		productsMenu()
+		break
+	case 3:
+		fmt.Println("Changing to main menu...")
+		break
+	case 4:
+		os.Exit(0)
+	default:
+		fmt.Println("Invalid option")
 	}
 }
 
@@ -474,6 +629,33 @@ func createOrder() {
 			log.Fatalln(err)
 			return
 		}
+	}
+
+	utilities.PrintTitle("Order generated successfully")
+	utilities.PrintSubtitle("Options menu")
+	utilities.PrintMenus("Generate other Order", "Go to Orders menu", "Go to Main menu", "Exit")
+
+	option, err := utilities.ReadNumber(reader)
+
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	switch option {
+	case 1:
+		createOrder()
+		break
+	case 2:
+		ordersMenu()
+		break
+	case 3:
+		fmt.Println("Changing to main menu...")
+		break
+	case 4:
+		os.Exit(0)
+	default:
+		fmt.Println("Invalid option")
 	}
 }
 
@@ -553,5 +735,32 @@ func readOrders() {
 	default:
 		fmt.Println("Invalid option")
 
+	}
+
+	utilities.PrintTitle("Order generated successfully")
+	utilities.PrintSubtitle("Options menu")
+	utilities.PrintMenus("Generate other Order", "Go to Orders menu", "Go to Main menu", "Exit")
+
+	option, err = utilities.ReadNumber(reader)
+
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	switch option {
+	case 1:
+		createOrder()
+		break
+	case 2:
+		ordersMenu()
+		break
+	case 3:
+		fmt.Println("Changing to main menu...")
+		break
+	case 4:
+		os.Exit(0)
+	default:
+		fmt.Println("Invalid option")
 	}
 }
